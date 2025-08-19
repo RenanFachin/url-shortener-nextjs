@@ -1,0 +1,15 @@
+services:
+  url-shortener:
+    container_name: url-shortener
+    image: bitnami/postgresql:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=url-shortener
+    volumes:
+      - url-shortener_data:/bitnami/postgresql
+
+volumes:
+  url-shortener_data:
