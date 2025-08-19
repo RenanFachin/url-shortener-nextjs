@@ -1,5 +1,6 @@
 'use client'
 
+import axios from "axios";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useState } from "react";
@@ -7,10 +8,22 @@ import { useState } from "react";
 export default function ShortenForm() {
   const [url, setUrl] = useState<string>("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     console.log(url)
+
+    try {
+      const response = await axios.post("/api/shorten", {url})
+      console.log(response.data)
+
+      setUrl("")
+
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setUrl("")
+    }
 
   }
 
