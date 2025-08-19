@@ -16,5 +16,5 @@ export async function POST(request: NextRequest){
     }
   })
 
-  return NextResponse.json({ shortCode: shortCodeURl.shorCode })
+  return NextResponse.json({ shortCode: shortCodeURl.shorCode }, {status: 201})
 }
