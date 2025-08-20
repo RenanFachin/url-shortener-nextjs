@@ -5,7 +5,12 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useState } from "react";
 
-export default function ShortenForm() {
+interface handleRefreshProps {
+  handleRefresh: () => void
+}
+
+export default function ShortenForm({handleRefresh}: handleRefreshProps) {
+  const [isLoading, setIsLoading] = useState(false)
   const [url, setUrl] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -14,15 +19,20 @@ export default function ShortenForm() {
     console.log(url)
 
     try {
+      setIsLoading(true)
+
       const response = await axios.post("/api/shorten", {url})
       console.log(response.data)
 
       setUrl("")
 
+      handleRefresh()
+
     } catch (error) {
       console.error(error)
     } finally {
       setUrl("")
+      setIsLoading(false)
     }
 
   }
@@ -39,7 +49,9 @@ export default function ShortenForm() {
           onChange={(e) => setUrl(e.target.value)}
         />
 
-        <Button type="submit" className="w-full p-2">Shorten</Button>  
+        <Button type="submit" className="w-full p-2 cursor-pointer" disabled={isLoading}>
+          {isLoading ? "Shortening..." : "Shorten"}
+        </Button>  
       </div>
     </form>
   )

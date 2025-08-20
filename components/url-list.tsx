@@ -29,6 +29,7 @@ export default function URLList() {
     fetchAllUrls()
   }, [])
 
+
   return (
     <div className="mt-4">
       <h2 className="text-xl font-bold mb-2">Recent URLs</h2>
